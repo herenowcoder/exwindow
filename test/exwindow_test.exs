@@ -41,4 +41,11 @@ defmodule TokensTest do
     assert tokens("ab\n\n \n \nc") ===
       [ tok(word('ab'),2), lf, lf, spc, lf, spc, lf, tok(word('c'),1) ]
 
+  test "length of unicode word", do:
+    assert [tok(word(_),3)] = tokens("ąćę")
+
+  test "unicode words", do:
+    assert tokens("zażółć gęślą jaźń") === [tok(word('zażółć'),6), spc,
+      tok(word('gęślą'),5), spc, tok(word('jaźń'),4)]
+
 end
