@@ -3,6 +3,8 @@ defmodule Exwindow do
 
   defmacro tok(content, size), do: quote do: {:tok, unquote(content), unquote(size)}
   defmacro word(chars), do: quote do: {:word, unquote(chars)}
+  defmacro lf,  do: quote do: tok(:lf,0)
+  defmacro spc, do: quote do: tok(:spc,1)
 
   def tokens(str) do
     cw(str, 0, [], [])
@@ -18,21 +20,21 @@ defmodule Exwindow do
   end
 
   defp cw("\n"<>rest, _, [], words) do
-    cw(rest, 0, [], [tok(:lf,0) | words])
+    cw(rest, 0, [], [lf | words])
   end
 
   defp cw("\n"<>rest, i, chars, words) do
     word = tok(word(reverse chars), i)
-    cw(rest, 0, [], [tok(:lf,0), word | words])
+    cw(rest, 0, [], [lf, word | words])
   end
 
   defp cw(" "<>rest, _, [], words) do
-    cw(rest, 0, [], [tok(:spc,1) | words])
+    cw(rest, 0, [], [spc | words])
   end
 
   defp cw(" "<>rest, i, chars, words) do
     word = tok(word(reverse chars), i)
-    cw(rest, 0, [], [tok(:spc,1), word | words])
+    cw(rest, 0, [], [spc, word | words])
   end
 
   defp cw(<<c::utf8, rest::binary>>, i, chars, words) do
