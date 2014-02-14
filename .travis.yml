@@ -1,6 +1,5 @@
 language: erlang
-script: mix test
-install: mix deps.get
+script: MIX_ENV=test mix do deps.get, test
 otp_release:
   - R16B
 before_install:
