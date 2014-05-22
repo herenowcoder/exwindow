@@ -1,4 +1,4 @@
-[ "excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "3546b9956e1f813e451b747a251298b8e37d1dd7", []},
-  "exprintf": {:git, "git://github.com/parroty/exprintf.git", "153697ed99bc2050abbb3b17a1efc413025113f2", []},
-  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "3db1d520e00fb28c3eee4e5b30645d5878037c38", []},
-  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]} ]
+%{"excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "1c7539d61a55733d34e9c53cf1987ba7adf5bf13", []},
+  "exprintf": {:package, "0.1.0"},
+  "jsex": {:package, "2.0.0"},
+  "jsx": {:package, "2.0.3"}}
