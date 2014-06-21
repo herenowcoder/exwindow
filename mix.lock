@@ -1,4 +1,4 @@
-%{"excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "e594fcf5fc380d561b5573490852b7b4d0e5526a", []},
-  "exprintf": {:package, "0.1.0"},
+%{"excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "38625ea6d32d633b184284b5eb5c79e7bfc28258", [tag: "v0.2.2"]},
+  "exprintf": {:package, "0.1.2"},
   "jsex": {:package, "2.0.0"},
   "jsx": {:package, "2.0.3"}}
