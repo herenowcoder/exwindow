@@ -6,9 +6,16 @@ defmodule Exwindow do
   defmacro lf,  do: quote do: tok(:lf,0)
   defmacro spc, do: quote do: tok(:spc,1)
 
+  @type token :: {:tok, :lf|:spc|{:word,String.t}, integer}
+
+  @spec tokens(String.t) :: [token]
+
   def tokens(str) do
     cw(str, 0, [], [])
   end
+
+
+  @spec cw(String.t, non_neg_integer, [pos_integer], [token]) :: [token]
 
   defp cw("", _, [], words) do
     reverse words
