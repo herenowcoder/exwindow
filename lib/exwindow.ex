@@ -15,7 +15,7 @@ defmodule Exwindow do
   end
 
 
-  @spec cw(String.t, non_neg_integer, [pos_integer], [token]) :: [token]
+  @spec cw(String.t, non_neg_integer, [char], [token]) :: [token]
 
   defp cw("", _, [], words) do
     reverse words
