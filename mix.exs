@@ -5,7 +5,7 @@ defmodule Exwindow.Mixfile do
     [ app: :exwindow,
       version: "0.0.2",
       elixir: "~> 0.14.2",
-      deps: deps(Mix.env),
+      deps: deps,
       test_coverage: [tool: ExCoveralls]
     ]
   end
@@ -20,9 +20,7 @@ defmodule Exwindow.Mixfile do
   #
   # To specify particular versions, regardless of the tag, do:
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
-  defp deps(:test) do
-    [{:excoveralls, "~> 0.2.3", github: "parroty/excoveralls", tag: "v0.2.3"}
-      | deps :prod]
+  defp deps do
+    [{:excoveralls, github: "parroty/excoveralls", tag: "v0.2.3", only: :test}]
   end
-  defp deps(_), do: []
 end
