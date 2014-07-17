@@ -21,6 +21,6 @@ defmodule Exwindow.Mixfile do
   # To specify particular versions, regardless of the tag, do:
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   defp deps do
-    [{:excoveralls, github: "parroty/excoveralls", tag: "v0.2.3", only: :test}]
+    [{:excoveralls, "~> 0.3.0", only: :test}]
   end
 end
