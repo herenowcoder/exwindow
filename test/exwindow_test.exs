@@ -52,3 +52,64 @@ defmodule ExWindow.CountedTokensTest do
       {'gęślą',5}, spc, {'jaźń',4}]
 
 end
+
+
+defmodule Exwindow.LayTest do
+  use ExUnit.Case
+  import Exwindow
+
+  defmacro assert_not_fit(expr) do
+    quote do: assert catch_throw(unquote(expr)) == :does_not_fit
+  end
+
+  test "invalid sizes" do
+    assert_raise FunctionClauseError, fn -> lay("foo", 0, 0) end
+    assert_raise FunctionClauseError, fn -> lay("foo", 0, 1) end
+    assert_raise FunctionClauseError, fn -> lay("foo", 1, 0) end
+    assert_raise FunctionClauseError, fn -> lay("foo", -1, 1) end
+    assert_raise FunctionClauseError, fn -> lay("foo", 1, -1) end
+  end
+
+  test "empty" do
+    assert "" |> counted_tokens |> lay(1,1) == []
+  end
+
+  test "1x1 window" do
+    assert "a" |> counted_tokens |> lay(1,1) == ['a']
+    assert_not_fit "\n" |> counted_tokens |> lay(1,1)
+    assert_not_fit "ab" |> counted_tokens |> lay(1,1)
+    assert " " |> counted_tokens |> lay(1,1) == [:spc]
+    assert_not_fit "  " |> counted_tokens |> lay(1,1)
+    # last assert above shouldn't happen - think of fixing this
+  end
+
+  test "2x1 window" do
+    assert "a " |> counted_tokens |> lay(2,1) == ['a', :spc]
+    assert_not_fit "\n"  |> counted_tokens |> lay(2,1)
+    assert_not_fit "abc" |> counted_tokens |> lay(2,1)
+  end
+
+  test "1x2 window" do
+    assert_not_fit "ab" |> counted_tokens |> lay(1,2)
+    assert "a " |> counted_tokens |> lay(1,2) == ['a', :lf]
+    assert "\n" |> counted_tokens |> lay(1,2) == [:lf]
+    assert_not_fit "\n\n" |> counted_tokens |> lay(1,2)
+    assert "  "   |> counted_tokens |> lay(1,2) == [:spc, :lf]
+    assert "   "  |> counted_tokens |> lay(1,2) == [:spc, :lf]
+    assert "    " |> counted_tokens |> lay(1,2) == [:spc, :lf]
+  end
+
+  test "words moved to new line" do
+    assert "foo quux" |> counted_tokens |> lay(4,2)
+      == ['foo', :spc, :lf, 'quux']
+    assert "foox quu" |> counted_tokens |> lay(4,2)
+      == ['foox', :lf, 'quu']
+    assert_not_fit "foo bar baz" |> counted_tokens |> lay(3,2)
+    assert_not_fit "foo bar baz" |> counted_tokens |> lay(4,2)
+    assert_not_fit "foo bar baz" |> counted_tokens |> lay(5,2)
+    assert_not_fit "foo bar baz" |> counted_tokens |> lay(6,2)
+    assert"foo bar baz" |> counted_tokens |> lay(7,2)
+      == ['foo', :spc, 'bar', :lf, 'baz']
+  end
+
+end

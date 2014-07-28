@@ -44,4 +44,39 @@ defmodule Exwindow do
     cw(rest, i+1, [c|chars], words)
   end
 
+
+  @spec lay([counted_token], pos_integer, pos_integer) :: [token]
+
+  def lay(tokens, w, h) when w > 0 and h > 0 do
+    lay(tokens, :nocarry, 0, 1, w, h, [])
+  end
+
+
+  @spec lay([counted_token], atom, non_neg_integer, pos_integer,
+            non_neg_integer, non_neg_integer, [token]) :: [token]
+
+  defp lay(_, _, _, iy, _, h, _) when iy > h do
+    throw :does_not_fit
+  end
+
+  defp lay([], _, _, _, _, _, acc) do
+    Enum.reverse(acc)
+  end
+
+  defp lay([{:spc,1} | ts], :carry, 0, iy, w, h, acc) do
+    lay(ts, :carry, 0, iy, w, h, acc)
+  end
+
+  defp lay([{:lf,0} | ts], _, _, iy, w, h, acc) do
+    lay(ts, :nocarry, 0, iy+1, w, h, [:lf | acc])
+  end
+
+  defp lay(ts0=[{token,len} | ts], _, ix, iy, w, h, acc) when iy <= h do
+    ix1 = ix + len
+    if ix1 <= w do
+      lay(ts, :nocarry, ix1, iy, w, h, [token | acc])
+    else
+      lay(ts0, :carry, 0, iy+1, w, h, [:lf | acc])
+    end
+  end
 end
