@@ -1,6 +1,6 @@
 language: erlang
 env:
-  - ELIXIR_VER=v0.14.2
+  - ELIXIR_VER=v0.14.3
 otp_release:
   - 17.1
 before_install:
@@ -9,7 +9,7 @@ before_install:
   - export PATH="$PATH:$PWD/vendor/elixir/bin"
   - export MIX_ENV=test
 before_script:
-    - mix local.install http://s3.hex.pm/installs/hex.ez --force
+    - mix archive.install http://s3.hex.pm/installs/hex.ez --force
     - mix deps.get
 script: 
     - mix test

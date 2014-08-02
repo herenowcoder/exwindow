@@ -4,7 +4,7 @@ defmodule Exwindow.Mixfile do
   def project do
     [ app: :exwindow,
       version: "0.0.2",
-      elixir: "~> 0.14.2",
+      elixir: "~> 0.14.3",
       deps: deps,
       test_coverage: [tool: ExCoveralls]
     ]
